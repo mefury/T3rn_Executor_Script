@@ -15,7 +15,7 @@ echo -e "\033[1;33mDescription: This script will setup the T3rn executor program
 echo -e "\033[1;36m==============================================\033[0m\n"
 
 # Wait for 5 seconds
-echo -e "\033[1;33mStarting setup in 5 seconds...\033[0m"
+echo -e "\033[1;33mGetting things ready for your...\033[0m"
 sleep 5
 
 # Check if executor is already running
