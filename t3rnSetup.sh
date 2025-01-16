@@ -75,6 +75,10 @@ export EXECUTOR_PROCESS_ORDERS=true
 export EXECUTOR_PROCESS_CLAIMS=true
 echo -e "\033[1;32mEXECUTOR_PROCESS_ORDERS and EXECUTOR_PROCESS_CLAIMS set to 'true'.\033[0m"
 
+# Export RPC_ENDPOINTS_L1RN
+export RPC_ENDPOINTS_L1RN='https://brn.calderarpc.com/'
+echo -e "\033[1;32mRPC_ENDPOINTS_L1RN set to 'https://brn.calderarpc.com/'.\033[0m"
+
 # Step 7: Select networks to enable
 echo -e "\033[1;33mSelect networks to enable:\033[0m"
 echo -e "\033[1;37m1. Arbitrum"
