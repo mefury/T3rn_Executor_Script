@@ -77,8 +77,8 @@ export EXECUTOR_PROCESS_CLAIMS_ENABLED=true
 echo -e "\033[1;32mEXECUTOR_PROCESS_ORDERS and EXECUTOR_PROCESS_CLAIMS set to 'true'.\033[0m"
 
 # Export RPC_ENDPOINTS_L1RN
-export RPC_ENDPOINTS_L1RN='https://brn.calderarpc.com/'
-echo -e "\033[1;32mRPC_ENDPOINTS_L1RN set to 'https://brn.calderarpc.com/'.\033[0m"
+export RPC_ENDPOINTS_L1RN='https://brn.rpc.caldera.xyz/'
+echo -e "\033[1;32mRPC_ENDPOINTS_L1RN set to 'https://brn.rpc.caldera.xyz/'.\033[0m"
 
 # Step 7: Select networks to enable
 echo -e "\033[1;33mSelect networks to enable:\033[0m"
