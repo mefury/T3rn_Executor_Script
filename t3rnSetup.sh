@@ -14,6 +14,41 @@ RED='\033[0;31m'
 MAGENTA='\033[0;35m'
 NC='\033[0m' # No Color
 
+# Credit display function
+show_credit() {
+    clear
+    echo -e "${YELLOW}==============================================${NC}"
+    echo -e "${GREEN}           T3RN Executor Setup Script          ${NC}"
+    echo -e "${YELLOW}==============================================${NC}"
+    echo -e "${MAGENTA} Version 2.0 ${NC}"
+    echo -e "${MAGENTA} Created by: MEFURY ${NC}"
+    echo -e "${YELLOW}==============================================${NC}"
+}
+
+# Animated preparation message
+preparation_animation() {
+    echo -e "\n${CYAN}Preparing installation..."
+    echo -n "Initializing systems "
+    for i in {1..10}; do
+        echo -n "."
+        sleep 0.2
+    done
+    echo -e "${NC}\n"
+}
+
+# Show credit information
+show_credit
+
+# Wait 5 seconds with spinner
+echo -e "\n${GREEN}Script will start in 5 seconds...${NC}"
+for i in {1..5}; do
+    echo -ne "${MAGENTA}⏳ ${NC}Waiting [${i}/5] seconds\r"
+    sleep 1
+done
+
+# Show preparation animation
+preparation_animation
+
 set -e
 
 # Step 1: Kill existing executor process
