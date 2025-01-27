@@ -133,6 +133,11 @@ echo -e "\033[1;32mPRIVATE_KEY_LOCAL set.\033[0m"
 
 # Step 10: Set EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API
 export EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API=false
+export RPC_ENDPOINTS_bssp='https://base-sepolia-rpc.publicnode.com'
+export RPC_ENDPOINTS_opsp='https://sepolia.optimism.io/'
+export API_ENDPOINTS_L1RN='https://brn.rpc.caldera.xyz/'
+export RPC_ENDPOINTS_blast='https://sepolia.blast.io/'
+export RPC_ENDPOINTS_arb='https://arbitrum-sepolia-rpc.publicnode.com/'
 echo -e "\033[1;32mEXECUTOR_PROCESS_PENDING_ORDERS_FROM_API set to 'false'.\033[0m"
 
 # Step 11: Set custom RPC endpoints
