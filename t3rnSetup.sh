@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # ==============================================
-# T3rn Executor Setup Script
+# T3RN EXECUTOR SETUP SCRIPT
 # Version: 2.0
 # Created by: MEFURY
 # ==============================================
@@ -10,28 +10,31 @@
 CYAN='\033[0;36m'
 YELLOW='\033[1;33m'
 GREEN='\033[0;32m'
-RED='\033[0;31m'
 MAGENTA='\033[0;35m'
 NC='\033[0m' # No Color
 
-# Credit display function
+# Credit display
 show_credit() {
     clear
-    echo -e "${YELLOW}==============================================${NC}"
-    echo -e "${GREEN}           T3RN Executor Setup Script          ${NC}"
-    echo -e "${YELLOW}==============================================${NC}"
-    echo -e "${MAGENTA} Version 2.0 ${NC}"
-    echo -e "${MAGENTA} Created by: MEFURY ${NC}"
-    echo -e "${YELLOW}==============================================${NC}"
+    echo -e "${CYAN}"
+    echo -e "=============================================="
+    echo -e "           T3RN Executor Setup Script          "
+    echo -e "=============================================="
+    echo -e "${MAGENTA}"
+    echo -e " Version 2.0"
+    echo -e " Created by: MEFURY"
+    echo -e "${CYAN}"
+    echo -e "=============================================="
+    echo -e "${NC}"
 }
 
-# Animated preparation message
+# Preparation animation
 preparation_animation() {
-    echo -e "\n${CYAN}Preparing installation..."
-    echo -n "Initializing systems "
-    for i in {1..10}; do
-        echo -n "."
-        sleep 0.2
+    echo -e "\n${GREEN}Preparing installation environment..."
+    echo -n "Loading components "
+    for i in {1..5}; do
+        echo -n "▹"
+        sleep 0.3
     done
     echo -e "${NC}\n"
 }
@@ -39,86 +42,79 @@ preparation_animation() {
 # Show credit information
 show_credit
 
-# Wait 5 seconds with spinner
-echo -e "\n${GREEN}Script will start in 5 seconds...${NC}"
-for i in {1..5}; do
-    echo -ne "${MAGENTA}⏳ ${NC}Waiting [${i}/5] seconds\r"
-    sleep 1
-done
+# Initial delay
+echo -e "${GREEN}Initializing setup process...${NC}"
+sleep 2
 
-# Show preparation animation
+# Preparation sequence
 preparation_animation
 
 set -e
 
-# Step 1: Kill existing executor process
-echo -e "\n${CYAN}Checking for running executor processes...${NC}"
+# Execution functions
+# ==================
+
+# Step 1: Process management
+echo -e "${GREEN}▶ Checking system processes...${NC}"
 if pgrep -x "executor" > /dev/null; then
-    echo -e "${YELLOW}Found running executor. Killing process...${NC}"
+    echo -e "${YELLOW}⚠ Found running instance - terminating...${NC}"
     pkill -9 executor
     sleep 2
 fi
 
-# Step 2: Cleanup old files
-echo -e "\n${CYAN}Cleaning up previous installations...${NC}"
+# Step 2: Cleanup
+echo -e "${GREEN}▶ Performing system cleanup...${NC}"
 rm -f executor-linux*
 rm -rf executor
 
-# Step 3: Download latest release
-echo -e "\n${CYAN}Downloading latest executor binary...${NC}"
+# Step 3: Download
+echo -e "${GREEN}▶ Downloading latest release...${NC}"
 DOWNLOAD_URL=$(curl -s https://api.github.com/repos/t3rn/executor-release/releases/latest | grep "executor-linux" | grep "browser_download_url" | cut -d '"' -f 4)
 wget -q --show-progress $DOWNLOAD_URL
 
-# Step 4: Extract downloaded file
-echo -e "\n${CYAN}Extracting archive...${NC}"
+# Step 4: Extraction
+echo -e "${GREEN}▶ Extracting package contents...${NC}"
 tar -xzf executor-linux*.tar.gz
 
-# Step 5: Change to binary directory
+# Step 5: Directory navigation
 cd executor/executor/bin
 
-# Step 6: Set environment variables
-echo -e "\n${GREEN}Setting up environment variables...${NC}"
+# Configuration setup
+# ===================
 
-# Basic configuration
+# Environment variables
 export NODE_ENV=testnet
 export LOG_LEVEL=debug
 export LOG_PRETTY=false
-
-# Execution flags
 export EXECUTOR_PROCESS_ORDERS=true
 export EXECUTOR_PROCESS_CLAIMS=true
-
-# Private key setup
-echo -e "${MAGENTA}"
-read -p "Enter your PRIVATE KEY: " PRIVATE_KEY
-echo -e "${NC}"
-export PRIVATE_KEY_LOCAL=$PRIVATE_KEY
-
-# Network configuration
 export ENABLED_NETWORKS='base-sepolia,optimism-sepolia,l1rn,blast-sepolia,arb-sepolia'
-
-# Advanced flags
 export EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API=false
 export EXECUTOR_PROCESS_ORDERS_API_ENABLED=false
 export EXECUTOR_ENABLE_BATCH_BIDING=true
 export EXECUTOR_PROCESS_BIDS_ENABLED=true
 
-# Gas price configuration
-echo -e "${CYAN}"
-read -p "Enter MAX_L3_GAS_PRICE [500]: " GAS_PRICE
+# User inputs
+echo -e "${YELLOW}"
+read -p "Enter PRIVATE KEY: " PRIVATE_KEY
+echo -e "${NC}"
+export PRIVATE_KEY_LOCAL=$PRIVATE_KEY
+
+echo -e "${YELLOW}"
+read -p "Set MAX_L3_GAS_PRICE [500]: " GAS_PRICE
 GAS_PRICE=${GAS_PRICE:-500}
 echo -e "${NC}"
 export EXECUTOR_MAX_L3_GAS_PRICE=$GAS_PRICE
 
-# RPC configuration
-echo -e "\n${MAGENTA}RPC Endpoint Options:${NC}"
-PS3='Choose RPC configuration: '
+# RPC Configuration
+echo -e "\n${YELLOW}Select RPC Configuration:${NC}"
+PS3='Choose option: '
 options=("Public RPCs" "Default RPCs")
 select opt in "${options[@]}"
 do
     case $opt in
         "Public RPCs")
-            echo -e "${CYAN}Using public RPC endpoints${NC}"
+            echo -e "${GREEN}Using public endpoints${NC}"
             export RPC_ENDPOINTS_bssp='https://base-sepolia-rpc.publicnode.com'
             export RPC_ENDPOINTS_opsp='https://sepolia.optimism.io/'
             export API_ENDPOINTS_L1RN='https://brn.rpc.caldera.xyz/'
@@ -127,28 +123,29 @@ do
             break
             ;;
         "Default RPCs")
-            echo -e "${CYAN}Using default RPC configuration${NC}"
+            echo -e "${GREEN}Using default configuration${NC}"
             break
             ;;
-        *) echo -e "${RED}Invalid option $REPLY${NC}";;
+        *) echo -e "${YELLOW}Invalid selection${NC}";;
     esac
 done
 
-# Step 7: Create restart script
-echo -e "\n${GREEN}Creating restart script...${NC}"
+# Service management
+# ==================
+
+echo -e "${GREEN}▶ Configuring service...${NC}"
 cat > loop.sh << 'EOL'
 #!/bin/bash
 while true; do
-  ./executor
-  if [ $? -ne 0 ]; then
-    echo "Application crashed. Restarting in 1 minute..."
+  ./executor || {
+    echo "Service interruption detected - restarting..."
     sleep 60
-  fi
+  }
 done
 EOL
 
 chmod +x loop.sh
 
-# Step 8: Start the application
-echo -e "\n${GREEN}Starting executor...${NC}"
+# Final execution
+echo -e "${GREEN}✅ Setup complete - launching service...${NC}"
 exec ./loop.sh
