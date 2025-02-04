@@ -80,7 +80,7 @@ cd executor/executor/bin
 echo -e "\n${GREEN}Setting up environment variables...${NC}"
 
 # Basic configuration
-export NODE_ENV=testnet
+export ENVIRONMENT=testnet
 export LOG_LEVEL=debug
 export LOG_PRETTY=false
 
